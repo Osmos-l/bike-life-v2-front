@@ -20,6 +20,17 @@ class AuthService {
             });
     }
 
+    register(username, email, password) {
+        return axios.post('http://localhost:8100/api/auth/register', {username, email, password})
+            .then(async response => {
+                if (response.data.errors) {
+                    return response.data;
+                } else {
+                    return await this.login(username, password);
+                }
+            });
+    }
+
     logout() {
         localStorage.removeItem("tokens");
     }
@@ -27,6 +38,7 @@ class AuthService {
     getTokens() {
         return JSON.parse(localStorage.getItem("tokens"));
     }
+
 }
 
 export default new AuthService();
