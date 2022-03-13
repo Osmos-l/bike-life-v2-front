@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, FormGroup, FormLabel, Alert} from "react-bootstrap";
 import AuthService from '../../Services/AuthService';
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -9,10 +9,6 @@ const Login = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState(false);
-
-    if (AuthService.isAuthenticated()) {
-        return <Navigate to="/dashboard" />
-    }
 
     const handleSubmit = (event) => {
         setError(false);

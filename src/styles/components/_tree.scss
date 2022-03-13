@@ -1,0 +1,70 @@
+.bike {
+  padding-top: 50px;
+  z-index: 5;
+
+  svg {
+    width: 100%;
+
+    #right-wheel, #left-wheel {
+      animation: wheel 3s infinite linear;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    #cloud2 {
+      animation: moveCloud 20s infinite linear;
+    }
+    #cloud3 {
+      animation: moveCloud2 20s infinite linear;
+    }
+    #cloud4, #cloud5 {
+      animation: moveCloud3 25s infinite linear;
+    }
+    #cloud6 {
+      animation: moveCloud4 37s infinite linear;
+    }
+  }
+
+}
+
+@keyframes moveCloud {
+  0% {
+    transform: translateX(90%);
+  }
+  100% {
+    transform: translateX(-30%);
+  }
+}
+@keyframes moveCloud2 {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-75%);
+  }
+}
+@keyframes moveCloud3 {
+  0% {
+    transform: translateX(25%);
+  }
+  100% {
+    transform: translateX(-90%);
+  }
+}
+@keyframes moveCloud4 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes wheel {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

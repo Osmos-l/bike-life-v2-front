@@ -1,0 +1,65 @@
+div#home {
+  background: linear-gradient(0deg, rgba(0, 236, 122, 0.75) 8.23%, #23C979 55.21%, #23C979 99.99%) fixed center no-repeat;
+  background-size: cover;
+
+  section {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  section#landing {
+    position: relative;
+
+    h1 {
+      text-align: center;
+      width: 100%;
+
+      position: absolute;
+      top: 15%;
+      left: 0%;
+      transform: translateY(-15%);
+
+      font-size: 22rem;
+      color: whitesmoke;
+    }
+
+    .content {
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translate(-50%, -75%);
+
+      @include md {
+        top: 60%;
+        transform: translate(-50%, -60%);
+      }
+
+      a.btn {
+        padding: 0.75rem 7rem;
+        border-radius: 0.25rem;
+        font-size: 3rem;
+        font-weight: 500;
+        background-color: whitesmoke;
+        color: #0a8f0b;
+      }
+
+      p {
+        color: whitesmoke;
+
+        a {
+          font-weight: 500;
+          color: white;
+        }
+      }
+    }
+  }
+
+  section#info {
+    background-color: white;
+  }
+
+  section#auth {
+    padding: 1.5rem;
+    position: relative;
+  }
+}
