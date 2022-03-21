@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tree from '../components/Tree';
+import { Link } from "react-scroll";
 
 const Home = () => {
     return (
@@ -11,12 +12,15 @@ const Home = () => {
             <section id="landing" className="text-center"> {/* First page */}
                 <h1>BIKE'S LIFE</h1>
                 <div className="content">
-                    <a className="btn">
+                    <Link
+                          className="btn"
+                          to="info"
+                          smooth={true}>
                         Découvrir
-                    </a>
+                    </Link>
                     <p>
                         <span className="text-center" >ou</span><br />
-                        Déjà utilisateur ? <span><a href="#">connexion</a></span> - <span><a href="#">inscription</a></span>
+                        Déjà utilisateur ? <span><Link to="auth" smooth={true}>connexion</Link></span> - <span><Link to="auth" smooth={true}>inscription</Link></span>
                     </p>
                 </div>
             </section>

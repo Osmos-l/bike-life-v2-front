@@ -9,4 +9,37 @@ div#auth {
   left: 50%;
 
   transform: translate(-50%, -50%);
+
+  .nav-link {
+    background-color: white;
+    color: #23C979;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+
+    transition: all 0.5s;
+    &.active {
+      background-color: #23C979;
+      color: white;
+    }
+  }
+
+  div#auth-form-container {
+    button {
+      text-align: center;
+      margin: 0 auto;
+
+      border: 1px solid darken(#23C979, 10%);
+      color: darken(#23C979, 10%);
+      background-color: white;
+      cursor: pointer;
+
+      transition: all 0.5s;
+      &:hover {
+        border-color: #23C979;
+
+        color: #23C979;
+      }
+    }
+  }
 }

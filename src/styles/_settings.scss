@@ -69,3 +69,8 @@ $screen-xl-min: 1200px;
 li {
   list-style-type: none;
 }
+
+label.form-label.required:after {
+  content: " *";
+  color: red;
+}

@@ -75,7 +75,7 @@ const Register = () => {
         <div>
             <Form noValidate onSubmit={handleSubmit}>
                 <FormGroup>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel className="required">Username</FormLabel>
                     <FormControl
                         onChange={(e) =>
                             setUsername({value: e.target.value, error: '' })
@@ -87,7 +87,7 @@ const Register = () => {
                     </Form.Control.Feedback>
                 </FormGroup>
                 <FormGroup>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="required">Email</FormLabel>
                     <FormControl
                         onChange={(e) =>
                             setEmail({value: e.target.value, error: '' })
@@ -100,7 +100,7 @@ const Register = () => {
                     </Form.Control.Feedback>
                 </FormGroup>
                 <FormGroup>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="required">Password</FormLabel>
                     <FormControl
                         onChange={(e) =>
                             setPassword({value: e.target.value, error: '' })
@@ -115,9 +115,11 @@ const Register = () => {
                         {password.error}
                     </Form.Control.Feedback>
                 </FormGroup>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <div className="w-100 text-center mt-4">
+                    <Button variant="primary" type="submit">
+                        Inscription
+                    </Button>
+                </div>
             </Form>
         </div>
     );

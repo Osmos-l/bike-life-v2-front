@@ -27,7 +27,7 @@ const Index = () => {
                     </li>
                 </ul>
             </div>
-            <div className="mt-3">
+            <div id="auth-form-container" className="mt-3">
                 { showModal == 'login' && <Login /> }
                 { showModal == 'register' && <Register /> }
             </div>

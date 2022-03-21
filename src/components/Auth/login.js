@@ -42,7 +42,7 @@ const Login = () => {
             </Alert> ) }
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <FormGroup>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel className="required">Username</FormLabel>
                     <FormControl
                         onChange={(e) =>
                             setUsername(e.target.value)
@@ -54,7 +54,7 @@ const Login = () => {
                     </Form.Control.Feedback>
                 </FormGroup>
                 <FormGroup>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="required">Password</FormLabel>
                     <FormControl
                         onChange={(e) =>
                             setPassword(e.target.value)
@@ -66,9 +66,11 @@ const Login = () => {
                         Password is required.
                     </Form.Control.Feedback>
                 </FormGroup>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <div className="w-100 text-center mt-4">
+                    <Button variant="primary" type="submit">
+                        Connexion
+                    </Button>
+                </div>
             </Form>
         </div>
     );

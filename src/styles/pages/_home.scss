@@ -49,6 +49,13 @@ div#home {
         a {
           font-weight: 500;
           color: white;
+          text-decoration: underline;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            color: rgb(235, 235, 235);
+          }
         }
       }
     }
