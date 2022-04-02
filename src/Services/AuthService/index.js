@@ -1,44 +1,31 @@
-import axios from "axios";
-import React from "react";
+import axios from "../ApiService";
 
-class AuthService {
+export const AuthService = (authContext) => {
 
-    isAuthenticated() {
-        const tokens = this.getTokens();
-
-        return tokens && tokens.accessToken;
+    const register = (username, email, password) => {
+        return axios.post('/auth/register', {username, email, password})
+            .then(async response => {
+                if (response.data.errors) {
+                    return response.data;
+                } else {
+                    return await login(username, password);
+                }
+            });
     }
 
-    login(username, password) {
-        return axios.post('http://localhost:8100/api/auth/login', {username, password})
+    const login = (username, password) => {
+       return axios.post('/auth/login', {username, password})
             .then(response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("tokens", JSON.stringify(response.data));
+                if (response.data.tokens) {
+                    authContext.login(response.data.tokens, response.data.user);
                 }
 
                 return response.data;
             });
     }
 
-    register(username, email, password) {
-        return axios.post('http://localhost:8100/api/auth/register', {username, email, password})
-            .then(async response => {
-                if (response.data.errors) {
-                    return response.data;
-                } else {
-                    return await this.login(username, password);
-                }
-            });
-    }
-
-    logout() {
-        localStorage.removeItem("tokens");
-    }
-
-    getTokens() {
-        return JSON.parse(localStorage.getItem("tokens"));
-    }
-
+    return {
+        register,
+        login
+    };
 }
-
-export default new AuthService();

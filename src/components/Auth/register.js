@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import AuthService from '../../Services/AuthService';
+import {AuthService} from '../../Services/AuthService';
 import {useNavigate} from "react-router-dom";
 
 const emailRegex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
@@ -10,6 +10,7 @@ const isValidEmail = (email) => {
 
 const Register = () => {
     const navigate = useNavigate();
+    const authService = AuthService();
     const [username, setUsername] = useState({ value: '', error: ''});
     const [email, setEmail] = useState({ value: '', error: ''});
     const [password, setPassword] = useState({ value: '', error: ''});
@@ -43,7 +44,7 @@ const Register = () => {
             return;
         }
 
-        AuthService.register(username.value, email.value, password.value)
+        authService.register(username.value, email.value, password.value)
             .then(res => {
                 if (res.errors) {
                     event.preventDefault();

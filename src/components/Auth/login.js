@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, FormGroup, FormLabel, Alert} from "react-bootstrap";
-import AuthService from '../../Services/AuthService';
 import {useNavigate} from "react-router-dom";
+import {AuthService} from "../../Services/AuthService";
+import {useAuth} from "../../Provider/AuthProvider";
 
 const Login = () => {
+    const authContext = useAuth();
+    const authService = AuthService(authContext);
+
     const navigate = useNavigate();
     const [validated, setValidated] = useState(false);
     const [username, setUsername] = useState();
@@ -22,7 +26,7 @@ const Login = () => {
             return;
         }
 
-        AuthService.login(username, password)
+        authService.login(username, password)
             .then(response => {
                 if (response.errors) {
                     setError(true);

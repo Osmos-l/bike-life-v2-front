@@ -1,8 +1,11 @@
 import Routes from "./components/Routes";
+import {AuthProvider} from "./Provider/AuthProvider";
 
 function App() {
   return (
-    <Routes/>
+      <AuthProvider>
+        <Routes/>
+      </AuthProvider>
   );
 }
 

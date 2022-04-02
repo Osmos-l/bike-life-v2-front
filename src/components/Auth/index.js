@@ -1,15 +1,9 @@
 import React, {useState} from 'react';
 import Login from "./login";
 import Register from "./register";
-import AuthService from "../../Services/AuthService";
-import {Navigate} from "react-router-dom";
 
 const Index = () => {
     const [showModal, setShowModal] = useState('login'); // login or register
-
-    if (AuthService.isAuthenticated()) {
-        return <Navigate to="/dashboard" />
-    }
 
     return (
         <div id="auth">
