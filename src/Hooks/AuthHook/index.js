@@ -1,3 +1,4 @@
+import axiosPrivate from "../../Services/ApiService";
 import {useState} from "react";
 
 export const useHookAuth = () => {
@@ -9,16 +10,11 @@ export const useHookAuth = () => {
         setTokens(newTokens);
     }
 
-    const getAPIHeader = () => {
-        if (tokens && tokens.accessToken) {
-            return {
-                headers: {
-                    'Authorization': `Bearer ${tokens.accessToken}`
-                }
-            };
-        } else {
-            return {};
-        }
+    const refreshToken = async () => {
+        const res = await axiosPrivate.post("/auth/refresh", null, {withCredentials: true});
+        setTokens({ accessToken: res.data });
+
+        return res.data;
     }
 
     const logout = () => {
@@ -32,6 +28,6 @@ export const useHookAuth = () => {
         tokens,
         login,
         logout,
-        getAPIHeader
+        refreshToken
     }
 }

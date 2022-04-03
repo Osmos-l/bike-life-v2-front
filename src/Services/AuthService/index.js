@@ -14,7 +14,7 @@ export const AuthService = (authContext) => {
     }
 
     const login = (username, password) => {
-       return axios.post('/auth/login', {username, password})
+       return axios.post('/auth/login', {username, password}, {withCredentials: true})
             .then(response => {
                 if (response.data.tokens) {
                     authContext.login(response.data.tokens, response.data.user);

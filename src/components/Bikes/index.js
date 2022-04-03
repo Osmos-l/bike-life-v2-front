@@ -10,13 +10,22 @@ const Index = () => {
     const authContext = useAuth();
     const userService = UserService(authContext);
 
-    useEffect(() => {
+    const getBikes = () => {
         userService.getBikes()
             .then(res =>  {
-               setBikes(res);
-               setSpinner(false);
+                setBikes(res);
+                setSpinner(false);
             });
+    }
+
+    useEffect(() => {
+        getBikes();
     }, []);
+
+    const reloadBikes = () => {
+        setSpinner(true);
+        getBikes();
+    }
 
     return (
         <div className="col-12">
@@ -24,6 +33,9 @@ const Index = () => {
                 <div className="col-12">
                     <h2>My bikes</h2>
                     <hr className="w-50" />
+                </div>
+                <div className="col-12">
+                   <button onClick={reloadBikes}>Reload</button>
                 </div>
             </div>
             <div className="row bg-dark text-white">
