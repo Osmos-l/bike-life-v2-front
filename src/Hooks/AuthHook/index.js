@@ -3,31 +3,47 @@ import {useState} from "react";
 
 export const useHookAuth = () => {
     const [user, setUser] = useState(null);
-    const [tokens, setTokens] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
 
-    const login = (newTokens, newUser) => {
-        setUser(newUser);
-        setTokens(newTokens);
+    const login = ({accessToken, refreshToken}, user) => {
+        setUser(user);
+        setAccessToken(accessToken);
+        localStorage.setItem("refresh_token", refreshToken);
     }
 
-    const refreshToken = async () => {
-        const res = await axiosPrivate.post("/auth/refresh", null, {withCredentials: true});
-        setTokens({ accessToken: res.data });
+    const tryRefreshAccessToken = async () => {
+        try {
+            const refreshToken = localStorage.getItem("refresh_token");
 
-        return res.data;
+            if (refreshToken) {
+                const res = await axiosPrivate.post("/auth/refresh", { refreshToken });
+                const accessToken = res.data.accessToken;
+
+                setAccessToken(accessToken);
+
+                return accessToken;
+            } else {
+                throw 'No refresh token';
+            }
+
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+
     }
 
     const logout = () => {
         setUser(null);
-        setTokens(null);
-        //localStorage.removeItem("refreshToken");
+        setAccessToken(null);
+        localStorage.removeItem("refresh_token");
     }
 
     return {
         user,
-        tokens,
+        accessToken,
         login,
         logout,
-        refreshToken
+        tryRefreshAccessToken
     }
 }

@@ -1,46 +1,52 @@
-import { axiosPrivate } from "../../Services/ApiService";
+import axios from "../../Services/ApiService";
 import { useEffect } from "react";
 
 const useAxiosPrivate = (authContext) => {
 
     useEffect(() => {
-        const requestIntercept = axiosPrivate.interceptors.request.use(
+        const requestIntercept = axios.interceptors.request.use(
             config => {
                 if (!config.headers["Authorization"]) {
-                    config.headers["Authorization"] = `Bearer ${authContext.tokens.accessToken}`;
+                    config.headers["Authorization"] = `Bearer ${authContext.accessToken}`;
                 }
                 return config;
             }, error => Promise.reject(error)
         );
 
-        const responseIntercept = axiosPrivate.interceptors.response.use(
+        const responseIntercept = axios.interceptors.response.use(
             response => response,
             async (error) => {
-                const prevRequest = error?.config;
-                if (error?.response?.status === 403) {
-                    if (prevRequest.sent) {
-                        authContext.logout();
-                        return error;
-                    } else {
-                        prevRequest.sent = true;
+                try {
+                    const prevRequest = error?.config;
+                    if (error?.response?.status === 403) {
+                        if (prevRequest.sent) {
+                            authContext.logout();
+                        } else {
+                            prevRequest.sent = true;
 
-                        const accessToken = await authContext.refreshToken();
+                            const accessToken = await authContext.tryRefreshAccessToken();
 
-                        prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-                        return axiosPrivate(prevRequest);
+                            prevRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+                            return axios(prevRequest);
+                        }
                     }
+                } catch (e) {
+                    console.log("response intercept ->");
+                    console.error(e);
+                    return error;
                 }
+
                 return error;
             }
         )
 
         return () => (
-            axiosPrivate.interceptors.request.eject(requestIntercept),
-            axiosPrivate.interceptors.response.eject(responseIntercept)
+            axios.interceptors.request.eject(requestIntercept),
+            axios.interceptors.response.eject(responseIntercept)
         )
     }, [authContext]);
 
-    return axiosPrivate;
+    return axios;
 }
 
 export default useAxiosPrivate;
