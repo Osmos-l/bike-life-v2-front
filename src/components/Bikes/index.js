@@ -1,28 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import UserService from '../../Services/UserService';
 import {Spinner} from "react-bootstrap";
+import {getBikes} from "../../Services/UserService";
 
 const Index = () => {
     const [spinner, setSpinner] = useState(true);
     const [bikes, setBikes] = useState([]);
 
-    const userService = UserService();
-
-    const getBikes = () => {
-        userService.getBikes()
-            .then(res =>  {
-                setBikes(res);
-                setSpinner(false);
-            });
+    const loadBikes = async () => {
+        setSpinner(true);
+       const response = await getBikes();
+       setBikes(response);
+       setSpinner(false);
     }
 
     useEffect(() => {
-        getBikes();
+        loadBikes();
     }, []);
 
     const reloadBikes = () => {
-        setSpinner(true);
-        getBikes();
+        loadBikes();
     }
 
     return (

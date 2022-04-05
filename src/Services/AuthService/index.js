@@ -1,5 +1,5 @@
 import {makePostRequest} from "../ApiService";
-import {setAccessToken, setAuthenticated, setRefreshToken} from "../../Libs/Store";
+import {getRefreshToken, setAccessToken, setAuthenticated, setRefreshToken} from "../../Libs/Store";
 
 export const register = async (username, email, password) => {
     const response = await makePostRequest('/auth/register', {username, email, password});
@@ -28,15 +28,24 @@ export const login = async (username, password, rememberMe) => {
 }
 
 export const tryRefreshAccessToken = async () => {
-    const accessToken = "stub"; // TODO: Call API
-    if (!accessToken) {
-        logout();
+    const refreshToken = getRefreshToken();
+    if (refreshToken) {
+
+        const accessToken = await makePostRequest("/auth/refresh", { refreshToken });
+        if (accessToken) {
+            return accessToken;
+        }
     }
-    return accessToken;
+    console.log("try refresh token -> logout");
+    //logout();
 }
 
 export const logout = () => {
+    const refreshToken = getRefreshToken();
+    if (refreshToken) {
+        makePostRequest("/auth/logout", { refreshToken });
+    }
+
     setAuthenticated(false);
     window.location.reload();
-    // TODO: Call API
 }

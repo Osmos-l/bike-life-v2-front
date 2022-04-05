@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import UserService from '../../Services/UserService';
+import {getTracks} from "../../Services/UserService";
 
 const Index = () => {
     const [tracks , setTracks] = useState([]);
 
-    const userService = UserService();
-
-    useEffect(() => {
-        const tracks = userService.getTracks();
+    useEffect( async () => {
+        const tracks = await getTracks();
         setTracks(tracks);
     }, []);
 

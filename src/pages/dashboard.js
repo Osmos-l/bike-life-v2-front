@@ -29,7 +29,7 @@ const Dashboard = () => {
                         {/* <Tracks /> */}
                     </div>
                     <div className="row mb-5">
-                        {/* <Bikes /> */}
+                        <Bikes />
                     </div>
                     <div className="row mb-5">
 
