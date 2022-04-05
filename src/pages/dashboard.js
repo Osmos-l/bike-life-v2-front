@@ -1,16 +1,17 @@
 import React from 'react';
-import {Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Tracks from "../components/Tracks";
 import Bikes from "../components/Bikes";
-import {useAuth} from "../Provider/AuthProvider";
+import {logout} from "../Services/AuthService";
 
 const Dashboard = () => {
-    const authContext = useAuth();
+    const user = {username: "stub"};
 
-    const user = authContext.user;
+    const handleLogout = () => {
+        logout();
+    }
 
-    return user ? (
+    return (
         <div id="dashboard">
             <div className="container-fluid">
                 <div className="row">
@@ -18,17 +19,17 @@ const Dashboard = () => {
                         <h1>Welcome {user.username} <span>👋</span></h1>
                     </div>
                     <div className="col-12 text-center">
-                        <Button variant="primary" onClick={authContext.logout}>
+                        <Button variant="primary" onClick={handleLogout}>
                             Logout
                         </Button>
                     </div>
                 </div>
                 <div className="container mt-5">
                     <div className="row mb-5">
-                        <Tracks />
+                        {/* <Tracks /> */}
                     </div>
                     <div className="row mb-5">
-                        <Bikes />
+                        {/* <Bikes /> */}
                     </div>
                     <div className="row mb-5">
 
@@ -37,7 +38,7 @@ const Dashboard = () => {
             </div>
 
         </div>
-    ) : (<Navigate to="/" />);
+    );
 };
 
 export default Dashboard;

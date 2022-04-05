@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, FormGroup, FormLabel, Alert} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import {AuthService} from "../../Services/AuthService";
-import {useAuth} from "../../Provider/AuthProvider";
+import {login} from "../../Services/AuthService";
 
 const Login = () => {
-    const authContext = useAuth();
-    const authService = AuthService(authContext);
-
     const navigate = useNavigate();
     const [validated, setValidated] = useState(false);
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         setError(false);
 
         const form = event.currentTarget;
@@ -26,21 +24,21 @@ const Login = () => {
             return;
         }
 
-        authService.login(username, password)
-            .then(response => {
-                if (response.errors) {
-                    setError(true);
-                    return;
-                }
+        const response = await login(username, password, rememberMe);
+        if (response.errors) {
+            setError(true);
+            return;
+        } else {
+            navigate("/dashboard");
+        }
 
-                navigate('/dashboard');
-            });
+
         event.preventDefault();
         event.stopPropagation();
     }
 
     return (
-        <div>
+        <div id="login">
             { error && ( <Alert variant="danger">
                 Invalid credentials !
             </Alert> ) }
@@ -70,7 +68,17 @@ const Login = () => {
                         Password is required.
                     </Form.Control.Feedback>
                 </FormGroup>
+                <FormGroup>
+                    <Form.Check
+                        onChange={(e) => {
+                            setRememberMe(!rememberMe);
+                        }}
+                        type="switch"
+                        label="Maintenir la connexion"
+                    />
+                </FormGroup>
                 <div className="w-100 text-center mt-4">
+
                     <Button variant="primary" type="submit">
                         Connexion
                     </Button>

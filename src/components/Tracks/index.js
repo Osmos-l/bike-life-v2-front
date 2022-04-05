@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import UserService from '../../Services/UserService';
-import {useAuth} from "../../Provider/AuthProvider";
 
 const Index = () => {
     const [tracks , setTracks] = useState([]);
 
-    const authContext = useAuth();
-    const userService = UserService(authContext);
+    const userService = UserService();
 
     useEffect(() => {
         const tracks = userService.getTracks();

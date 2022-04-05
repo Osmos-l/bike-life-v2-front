@@ -1,6 +1,25 @@
-const axios = require("axios");
-const BASE_URL = 'http://localhost:8100/api';
+import useAxios from "../../Libs/AxiosPrivate";
 
-export default axios.create({
-    baseURL: BASE_URL
-})
+export const makePostRequest = async (endpoint, data) => {
+    return await useAxios.post(endpoint, data)
+        .then(response => {
+            return response.data
+        })
+        .catch(error => {
+            return error.response.data;
+        });
+}
+
+export const makeGetRequest = async (endpoint) => {
+    return await useAxios.get(endpoint)
+        .then(response => {
+            return response.data
+        })
+        .catch(error => {
+            return error.response.data;
+        });
+}
+
+export default {
+    makePostRequest
+};

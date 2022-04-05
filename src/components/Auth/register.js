@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Form, FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import {AuthService} from '../../Services/AuthService';
+import {register} from '../../Services/AuthService';
 import {useNavigate} from "react-router-dom";
 
 const emailRegex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
@@ -10,12 +10,11 @@ const isValidEmail = (email) => {
 
 const Register = () => {
     const navigate = useNavigate();
-    const authService = AuthService();
     const [username, setUsername] = useState({ value: '', error: ''});
     const [email, setEmail] = useState({ value: '', error: ''});
     const [password, setPassword] = useState({ value: '', error: ''});
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         let isValidForm = true;
 
         if (!username.value) {
@@ -44,32 +43,25 @@ const Register = () => {
             return;
         }
 
-        authService.register(username.value, email.value, password.value)
-            .then(res => {
-                if (res.errors) {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    res.errors.forEach( ({param, msg}) => {
-                        switch (param) {
-                            case "username":
-                                setUsername({ value: username.value, error: msg});
-                                break;
-                            case "email":
-                                setEmail({ value: email.value, error: msg});
-                                break;
-                            case "password":
-                                setPassword({ value: password.value, error: msg});
-                                break;
-                        }
-                    });
-                } else {
-                    navigate('/dashboard');
-                }
-            })
-
         event.preventDefault();
-        event.stopPropagation();
+        const response = await register(username.value, email.value, password.value);
+        if (response.errors) {
+            response.errors.forEach( ({param, msg}) => {
+                switch (param) {
+                    case "username":
+                        setUsername({ value: username.value, error: msg});
+                        break;
+                    case "email":
+                        setEmail({ value: email.value, error: msg});
+                        break;
+                    case "password":
+                        setPassword({ value: password.value, error: msg});
+                        break;
+                }
+            });
+        } else {
+            navigate('/dashboard');
+        }
     }
 
     return (

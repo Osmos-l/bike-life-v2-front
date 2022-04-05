@@ -1,22 +1,16 @@
-import useAxiosPrivate from "../../Hooks/AxiosPrivate";
-import axios from '../ApiService';
+import {makeGetRequest} from '../ApiService';
 
 const UserService = (authContext) => {
-    const axiosPrivate = useAxiosPrivate(authContext);
 
-    const getBikes = () => {
+    const getBikes = async () => {
         const user = authContext.user;
 
-        return axiosPrivate.get(`/bike/${user._id}`)
-            .then(response => {
-                if (response.data) {
-                    return response.data;
-                }
-            })
-            .catch((error) => {
-                console.log("UserService ->");
-                console.log(error);
-            });
+        const response = await makeGetRequest(`/bike/${user._id}`);
+        if (response.bikes) {
+            return response.bikes;
+        }
+
+        return [];
     }
 
     const getInventory = () => {

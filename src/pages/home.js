@@ -5,8 +5,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tree from '../components/Tree';
 import { Link } from "react-scroll";
+import {isAuthenticated} from "../Libs/Store";
+import {Navigate} from "react-router-dom";
 
 const Home = () => {
+    if (isAuthenticated()) {
+        return <Navigate  to="/dashboard" replace />
+    }
+
     return (
         <div id="home">
             <section id="landing" className="text-center"> {/* First page */}

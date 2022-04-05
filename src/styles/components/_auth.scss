@@ -42,4 +42,19 @@ div#auth {
       }
     }
   }
+
+  div#login {
+
+    div.form-switch {
+      margin-top: 1rem;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    div.form-switch input {
+      transform: scale(1.5);
+      margin-right: 1rem;
+    }
+  }
 }

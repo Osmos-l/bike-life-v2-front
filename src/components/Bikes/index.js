@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import UserService from '../../Services/UserService';
 import {Spinner} from "react-bootstrap";
-import {useAuth} from "../../Provider/AuthProvider";
 
 const Index = () => {
     const [spinner, setSpinner] = useState(true);
     const [bikes, setBikes] = useState([]);
 
-    const authContext = useAuth();
-    const userService = UserService(authContext);
+    const userService = UserService();
 
     const getBikes = () => {
         userService.getBikes()
