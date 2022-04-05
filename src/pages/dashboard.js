@@ -6,9 +6,9 @@ import Bikes from "../components/Bikes";
 import {useAuth} from "../Provider/AuthProvider";
 
 const Dashboard = () => {
-    const auth = useAuth();
+    const authContext = useAuth();
 
-    const user = auth.user;
+    const user = authContext.user;
 
     return user ? (
         <div id="dashboard">
@@ -18,7 +18,7 @@ const Dashboard = () => {
                         <h1>Welcome {user.username} <span>👋</span></h1>
                     </div>
                     <div className="col-12 text-center">
-                        <Button variant="primary" onClick={auth.logout}>
+                        <Button variant="primary" onClick={authContext.logout}>
                             Logout
                         </Button>
                     </div>

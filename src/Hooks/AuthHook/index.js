@@ -1,4 +1,4 @@
-import axiosPrivate from "../../Services/ApiService";
+import axios from "../../Services/ApiService";
 import {useState} from "react";
 
 export const useHookAuth = () => {
@@ -16,7 +16,7 @@ export const useHookAuth = () => {
             const refreshToken = localStorage.getItem("refresh_token");
 
             if (refreshToken) {
-                const res = await axiosPrivate.post("/auth/refresh", { refreshToken });
+                const res = await axios.post("/auth/refresh", { refreshToken });
                 const accessToken = res.data.accessToken;
 
                 setAccessToken(accessToken);
@@ -33,9 +33,21 @@ export const useHookAuth = () => {
 
     }
 
-    const logout = () => {
+    const logout = async () => {
         setUser(null);
         setAccessToken(null);
+
+        const refreshToken = localStorage.getItem("refresh_token");
+        if (refreshToken) {
+            console.log("calling API");
+            try {
+                await axios.post("/auth/logout", {refreshToken});
+            } catch (e) {
+                console.log(e);
+            }
+
+        }
+
         localStorage.removeItem("refresh_token");
     }
 
