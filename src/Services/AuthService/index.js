@@ -31,13 +31,14 @@ export const tryRefreshAccessToken = async () => {
     const refreshToken = getRefreshToken();
     if (refreshToken) {
 
-        const accessToken = await makePostRequest("/auth/refresh", { refreshToken });
-        if (accessToken) {
-            return accessToken;
+        const response = await makePostRequest("/auth/refresh", { refreshToken });
+        if (response.accessToken) {
+            return response.accessToken;
         }
     }
+
     console.log("try refresh token -> logout");
-    //logout();
+    logout();
 }
 
 export const logout = () => {

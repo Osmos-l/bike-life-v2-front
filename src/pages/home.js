@@ -1,17 +1,41 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Auth from '../components/Auth';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tree from '../components/Tree';
 import { Link } from "react-scroll";
-import {isAuthenticated} from "../Libs/Store";
-import {Navigate} from "react-router-dom";
+import {getRefreshToken, isAuthenticated, setAccessToken, setAuthenticated} from "../Libs/Store";
+import {Navigate, useNavigate} from "react-router-dom";
+import {tryRefreshAccessToken} from "../Services/AuthService";
 
 const Home = () => {
-    if (isAuthenticated()) {
-        return <Navigate  to="/dashboard" replace />
+    const navigate = useNavigate();
+
+    const navigateToDashboard = () => {
+        navigate("/dashboard");
     }
+
+    const tryRememberMe = async () => {
+        const refreshToken = getRefreshToken();
+        if (!refreshToken) {
+            return;
+        }
+
+        const accessToken = await tryRefreshAccessToken();
+        if (!accessToken) {
+            return;
+        }
+
+        setAccessToken(accessToken);
+        setAuthenticated(true);
+        navigateToDashboard();
+    }
+
+    useEffect(() => {
+        isAuthenticated() ? navigateToDashboard() : tryRememberMe();
+    }, []);
+
 
     return (
         <div id="home">
