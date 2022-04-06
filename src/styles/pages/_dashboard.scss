@@ -1,0 +1,32 @@
+div#dashboard {
+
+  nav {
+    background-color: $primary-color;
+    color: white;
+
+    button.logout {
+      background-color: whitesmoke;
+      color: #0a8f0b;
+      border: none;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s ease-out;
+      &:hover {
+        background-color: darken($primary-color, 20%);
+        color: white;
+      }
+    }
+
+    button.edit-profil {
+      padding: 0;
+      border: none;
+      background-color: rgba(0, 0, 0, 0);
+      text-decoration: underline;
+      margin: 0 0 0.5rem 0;
+    }
+  }
+
+  div#content {
+
+  }
+
+}

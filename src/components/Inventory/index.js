@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import UserService from '../../Services/UserService';
-import {useAuth} from "../../Provider/AuthProvider";
+import {getInventory} from '../../Services/UserService';
 
 const Index = () => {
     const [inventory, setInventory] = useState([]);
 
-    const authContext = useAuth();
-    const userService = UserService(authContext);
 
-    useEffect(() => {
-        const inventory = userService.getTracks();
+    useEffect(async () => {
+        const inventory = await getInventory();
         setInventory(inventory);
     }, []);
 
@@ -17,7 +14,14 @@ const Index = () => {
         <div className="col-12">
             <div className="row">
                 <div className="col-12">
-                    <h2>My inventory</h2>
+                    <div className="d-flex justify-content-between">
+                        <h2>Mon stock</h2>
+                        <div>
+                            <button className="fill-green">+</button>
+                        </div>
+
+                    </div>
+
                     <hr className="w-50" />
                 </div>
             </div>

@@ -14,7 +14,14 @@ const Index = () => {
         <div className="col-12">
             <div className="row">
                 <div className="col-12">
-                    <h2>My tracks</h2>
+                    <div className="d-flex justify-content-between">
+                        <h2>Mes parcours</h2>
+                        <div>
+                            <button className="fill-green">+</button>
+                        </div>
+
+                    </div>
+
                     <hr className="w-50" />
                 </div>
             </div>

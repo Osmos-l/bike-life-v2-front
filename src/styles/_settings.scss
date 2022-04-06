@@ -1,7 +1,7 @@
 /*
   COLORS
 */
-$primary-color: rgb(79, 113, 112);
+$primary-color: #23C979;
 $secondary-color: #0a8f0b;
 
 /*
@@ -73,4 +73,19 @@ li {
 label.form-label.required:after {
   content: " *";
   color: red;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+
+  &.fill-green {
+    background-color: $primary-color;
+    color: white;
+    transition: all 0.2s ease-out;
+    &:hover {
+      background-color: darken($primary-color, 20%)
+    }
+  }
 }
