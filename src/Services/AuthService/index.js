@@ -40,6 +40,7 @@ export const tryRefreshAccessToken = async () => {
 
         const response = await makePostRequest("/auth/refresh", { refreshToken });
         if (response.accessToken) {
+            setAccessToken(response.accessToken);
             return response.accessToken;
         }
     }
