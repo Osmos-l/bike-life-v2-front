@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Tree from '../components/Tree';
 import { Link } from "react-scroll";
 import {getRefreshToken, isAuthenticated, setAccessToken, setAuthenticated} from "../Libs/Store";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {tryRefreshAccessToken} from "../Services/AuthService";
 
 const Home = () => {

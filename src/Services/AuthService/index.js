@@ -1,13 +1,20 @@
 import {makePostRequest} from "../ApiService";
-import {getRefreshToken, setAccessToken, setAuthenticated, setRefreshToken} from "../../Libs/Store";
+import {
+    getRefreshToken,
+    setAccessToken,
+    setAuthenticated,
+    setRefreshToken,
+    setUser,
+    getUser as getUserFromStore
+} from "../../Libs/Store";
 
 export const register = async (username, email, password) => {
     const response = await makePostRequest('/auth/register', {username, email, password});
     if (response.errors) {
         return response.errors;
-    } else {
-        return await login(username, password);
     }
+
+    return await login(username, password);
 }
 
 export const login = async (username, password, rememberMe) => {
@@ -38,6 +45,21 @@ export const tryRefreshAccessToken = async () => {
     }
 
     console.log("try refresh token -> logout");
+    logout();
+}
+
+export const getUser = async () => {
+    const user = getUserFromStore();
+    if (user) {
+        return user;
+    }
+
+    const response = await makePostRequest("/auth/user");
+    if (response && response.user) {
+        setUser(response.user);
+        return response.user;
+    }
+
     logout();
 }
 

@@ -1,17 +1,24 @@
-import React from 'react';
-import {Button} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Button, Spinner} from "react-bootstrap";
 import Tracks from "../components/Tracks";
 import Bikes from "../components/Bikes";
-import {logout} from "../Services/AuthService";
+import {getUser, logout} from "../Services/AuthService";
 
 const Dashboard = () => {
-    const user = {username: "stub"};
+    const [spinner, setSpinner] = useState(true);
+    const [user, setUser] = useState({ username: '' });
+
+    useEffect(async () => {
+        setUser(await getUser());
+        setSpinner(false);
+    }, []);
+
 
     const handleLogout = () => {
         logout();
     }
 
-    return (
+    return !spinner ? (
         <div id="dashboard">
             <div className="container-fluid">
                 <div className="row">
@@ -38,7 +45,13 @@ const Dashboard = () => {
             </div>
 
         </div>
-    );
+    ) : ( <div id="dashboard">
+        <div className="container-fluid">
+            <Spinner animation="border" role="status" >
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+    </div>);
 };
 
 export default Dashboard;
