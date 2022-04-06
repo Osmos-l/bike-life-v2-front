@@ -9,9 +9,12 @@ const Dashboard = () => {
     const [spinner, setSpinner] = useState(true);
     const [user, setUser] = useState({ username: '' });
 
-    useEffect(async () => {
-        setUser(await getUser());
-        setSpinner(false);
+    useEffect( () => {
+        const fetchUser = async () => {
+            setUser(await getUser());
+            setSpinner(false);
+        }
+        fetchUser();
     }, []);
 
 
