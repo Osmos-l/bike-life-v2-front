@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Auth from '../components/Auth';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -34,9 +34,9 @@ const Home = () => {
 
     useEffect(() => {
         isAuthenticated() ? navigateToDashboard() : tryRememberMe();
-    }, []);
+    });
 
-
+    const [authForm, setAuthForm] = useState('login'); // Login or register
     return (
         <div id="home">
             <section id="landing" className="text-center"> {/* First page */}
@@ -50,7 +50,18 @@ const Home = () => {
                     </Link>
                     <p>
                         <span className="text-center" >ou</span><br />
-                        Déjà utilisateur ? <span><Link to="auth" smooth={true}>connexion</Link></span> - <span><Link to="auth" smooth={true}>inscription</Link></span>
+                        Déjà utilisateur ? <span><
+                                                Link to="auth"
+                                                       smooth={true}
+                                                        onClick={() => setAuthForm('login')}>connexion
+                                                </Link>
+                                            </span> -
+                                            <span>
+                                                <Link to="auth"
+                                                      smooth={true}
+                                                      onClick={() => setAuthForm('register')}>inscription
+                                                </Link>
+                                            </span>
                     </p>
                 </div>
             </section>
@@ -70,7 +81,7 @@ const Home = () => {
                 </Container>
             </section>
             <section id="auth"> {/* Third page */}
-                <Auth />
+                <Auth authForm={authForm} setAuthForm={setAuthForm}/>
             </section>
         </div>
     );
