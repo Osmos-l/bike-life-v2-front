@@ -8,7 +8,7 @@ export const getBikes = async () => {
         return [];
     }
 
-    const response = await makeGetRequest(`/bike/${user._id}`);
+    const response = await makeGetRequest(`/bike/${user.id}`);
     if (response.bikes) {
         return response.bikes
     }
